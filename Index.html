@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DerMAX peel. | プロフェッショナルスキンケア</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <style>
+        /* カラー変数 */
+        :root {
+            --ivory: #F8F6F2;
+            --ivory-dark: #F0EDE6;
+            --tiffany: #7ACCC7;
+            --tiffany-light: #A8E0DD;
+            --tiffany-dark: #5BA6A2;
+            --gold: #C8B273;
+            --gold-light: #E9D9A2;
+            --gold-dark: #A18C4A;
+            --charcoal: #2F2F2F;
+            --text-light: #767676;
+        }
+        
+        /* リセットとベース */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--ivory);
+            color: var(--charcoal);
+            line-height: 1.7;
+            font-weight: 300;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* 紙のテクスチャ効果 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.04;
+            mix-blend-mode: multiply;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 5%;
+            position: relative;
+        }
+        
+        /* ヘッダー */
+        header {
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: all 0.4s ease;
+            padding: 30px 0;
+            background-color: rgba(248, 246, 242, 0);
+        }
+        
+        header.scrolled {
+            padding: 20px 0;
+            background-color: rgba(248, 246, 242, 0.95);
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.03);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 26px;
+            text-decoration: none;
+            color: var(--charcoal);
+            letter-spacing: 2px;
+        }
+        
+        .logo .der {
+            font-weight: 300;
+        }
+        
+        .logo .max {
+            font-weight: 500;
+        }
+        
+        .logo .peel {
+            font-weight: 300;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+        
+        nav ul li a {
+            color: var(--charcoal);
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 300;
+            position: relative;
+            padding: 5px 0;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: var(--tiffany-dark);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s ease;
+        }
+        
+        nav ul li a:hover {
+            color: var(--tiffany-dark);
+        }
+        
+        nav ul li a:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        /* 特徴リスト - ヘッダーに表示 */
+        .features-list {
+            display: flex;
+            gap: 30px;
+            margin-left: auto;
+        }
+        
+        .feature-item-mini {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .feature-icon-mini {
+            width: 20px;
+            height: 20px;
+            background-color: var(--tiffany-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+        }
+        
+        .feature-text-mini {
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--charcoal);
+        }
+        
+        /* 言語選択 */
+        .language-selector {
+            position: absolute;
+            top: 50%;
+            right: 5%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 15px;
+        }
+        
+        .language-btn {
+            background: none;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 2px 4px;
+            position: relative;
+        }
+        
+        .language-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: var(--tiffany);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .language-btn:hover, .language-btn.active {
+            color: var(--tiffany);
+        }
+        
+        .language-btn.active::after {
+            transform: scaleX(1);
+        }
+        
+        /* ヒーローセクション */
+        .hero {
+            height: 100vh;
+            min-height: 700px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding: 120px 0 60px;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--ivory) 0%, var(--ivory-dark) 100%);
+            z-index: 0;
+        }
+        
+        .hero-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-text {
+            flex: 1;
+            max-width: 500px;
+        }
+        
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            line-height: 1.1;
+            font-weight: 300;
+            color: var(--charcoal);
+            margin-bottom: 30px;
+        }
+        
+        .hero-title span {
+            display: block;
+            font-size: 6rem;
+            font-weight: 300;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        
+        .hero-subtitle {
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--text-light);
+            max-width: 400px;
+            margin-bottom: 50px;
+        }
+        
+        .hero-btn {
+            display: inline-block;
+            background-color: transparent;
+            border: 1px solid var(--tiffany);
+            color: var(--charcoal);
+            font-size: 12px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 15px 40px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        
+        .hero-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--tiffany-light) 0%, var(--tiffany) 100%);
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.4s ease;
+        }
+        
+        .hero-btn:hover {
+            color: var(--ivory);
+            border-color: transparent;
+        }
+        
+        .hero-btn:hover::before {
+            opacity: 1;
+        }
+        
+        .hero-image {
+            flex: 1;
+            position: relative;
+            height: 500px;
+        }
+        
+        .product-display {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .bottle {
+            position: absolute;
+            transition: all 0.6s ease;
+        }
+        
+        .bottle-1 {
+            height: 400px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-160px, -50%) rotate(-8deg);
+            z-index: 1;
+            opacity: 0.85;
+        }
+        
+        .bottle-2 {
+            height: 450px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+        }
+        
+        .bottle-3 {
+            height: 400px;
+            top: 50%;
+            left: 50%;
+            transform: translate(60px, -50%) rotate(8deg);
+            z-index: 2;
+            opacity: 0.85;
+        }
+        
+        .bottle img {
+            height: 100%;
+            filter: drop-shadow(0 20px 20px rgba(0, 0, 0, 0.08));
+            transition: all 0.6s ease;
+        }
+        
+        .product-display:hover .bottle-1 {
+            transform: translate(-200px, -50%) rotate(-12deg);
+            opacity: 0.7;
+        }
+        
+        .product-display:hover .bottle-3 {
+            transform: translate(100px, -50%) rotate(12deg);
+            opacity: 0.7;
+        }
+        
+        .product-display:hover .bottle-2 {
+            transform: translate(-50%, -60%);
+        }
+        
+        /* 言語選択セクション - メインコンテンツにある */
+        .language-section {
+            padding: 100px 0;
+            background-color: white;
+            text-align: center;
+        }
+        
+        .language-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--charcoal);
+            margin-bottom: 50px;
+        }
+        
+        .language-options {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+        }
+        
+        .language-option {
+            background-color: var(--ivory);
+            padding: 30px 50px;
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .language-option:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .language-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--tiffany-light), var(--tiffany));
+            transition: width 0.3s ease;
+        }
+        
+        .language-option:hover::before {
+            width: 100%;
+        }
+        
+        .language-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 300;
+            color: var(--charcoal);
+            position: relative;
+            z-index: 2;
+            transition: color 0.3s ease;
+        }
+        
+        .language-option:hover .language-name {
+            color: white;
+        }
+        
+        /* 製品セクション */
+        .products {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 300;
+            color: var(--charcoal);
+            margin-bottom: 20px;
+        }
+        
+        .section-subtitle {
+            font-size: 1rem;
+            font-weight: 300;
+            color: var(--text-light);
+            max-width: 500px;
+            margin-bottom: 50px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .product-card {
+            background-color: white;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-image {
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--ivory);
+            position: relative;
+        }
+        
+        .product-image img {
+            height: 80%;
+            transition: all 0.5s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+        
+        .product-info {
+            padding: 30px;
+        }
+        
+        .product-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--charcoal);
+            margin-bottom: 15px;
+        }
+        
+        .product-description {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+        
+        .product-link {
+            display: inline-block;
+            color: var(--charcoal);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            position: relative;
+        }
+        
+        .product-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: var(--gold);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s ease;
+        }
+        
+        .product-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        /* レスポンシブ対応 */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+            }
+            
+            .hero-text, .hero-image {
+                flex: none;
+                width: 100%;
+                max-width: none;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .features-list {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .hero-title span {
+                font-size: 4rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .language-options {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo"><span class="der">Der</span><span class="max">MAX</span> <span class="peel">peel.</span></a>
+                
+                <!-- 特徴リストをヘッダーに配置 -->
+                <div class="features-list">
+                    <div class="feature-item-mini">
+                        <div class="feature-icon-mini">1</div>
+                        <div class="feature-text-mini">プロ専用</div>
+                    </div>
+                    <div class="feature-item-mini">
+                        <div class="feature-icon-mini">2</div>
+                        <div class="feature-text-mini">根本改善</div>
+                    </div>
+                    <div class="feature-item-mini">
+                        <div class="feature-icon-mini">3</div>
+                        <div class="feature-text-mini">日本製</div>
+                    </div>
+                    <div class="feature-item-mini">
+                        <div class="feature-icon-mini">4</div>
+                        <div class="feature-text-mini">ダウンタイム</div>
+                    </div>
+                </div>
+                
+                <nav>
+                    <ul>
+                        <li><a href="#products">製品</a></li>
+                        <li><a href="#language">言語</a></li>
+                        <li><a href="#sample">サンプル</a></li>
+                        <li><a href="#cases">施術事例</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        <span>DerMAX peel.</span>
+                        プロフェッショナルスキンケア
+                    </h1>
+                    <p class="hero-subtitle">エステサロン専売 - 日本製の高品質ハーブピーリング製品。肌悩みの根本改善へ。</p>
+                    <a href="#sample" class="hero-btn">無料サンプル請求</a>
+                </div>
+                <div class="hero-image">
+                    <div class="product-display">
+                        <div class="bottle bottle-1">
+                            <img src="/api/placeholder/300/450" alt="DerMAX Peel Powder">
+                        </div>
+                        <div class="bottle bottle-2">
+                            <img src="/api/placeholder/300/450" alt="DerMAX Peel Lotion">
+                        </div>
+                        <div class="bottle bottle-3">
+                            <img src="/api/placeholder/300/450" alt="DerMAX After Gel">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="products">
+        <div class="container">
+            <h2 class="section-title">製品ラインナップ</h2>
+            <p class="section-subtitle">DerMAX peel.は、海綿由来成分と最新の美容成分を組み合わせた革新的なピーリングシステムです。</p>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/api/placeholder/200/300" alt="DerMAX Peel Powder">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">DerMAX Peel Powder</h3>
+                        <p class="product-description">海綿100%のトゲを使用したハーブピーリング。角質除去と肌再生を促進します。</p>
+                        <a href="#" class="product-link">詳細を見る</a>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/api/placeholder/200/300" alt="DerMAX Peel Lotion">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">DerMAX Peel Lotion</h3>
+                        <p class="product-description">幹細胞配合の高濃度美容液。ピーリング後の肌に栄養を与え、再生を促進します。</p>
+                        <a href="#" class="product-link">詳細を見る</a>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="/api/placeholder/200/300" alt="DerMAX After Gel">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">DerMAX After Gel</h3>
+                        <p class="product-description">ダウンタイム中の肌を保護する特殊ジェル。肌を落ち着かせ、回復を早めます。</p>
+                        <a href="#" class="product-link">詳細を見る</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="language" class="language-section">
+        <div class="container">
+            <h2 class="language-title">言語を選択</h2>
+            <div class="language-options">
+                <div class="language-option">
+                    <h3 class="language-name">日本語</h3>
+                </div>
+                <div class="language-option">
+                    <h3 class="language-name">English</h3>
+                </div>
+                <div class="language-option">
+                    <h3 class="language-name">Русский</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // スクロール時のヘッダー変化
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // 言語選択ボタンのアクティブ状態切り替え
+        const langButtons = document.querySelectorAll('.language-btn');
+        langButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                langButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                // 実際の言語切り替え処理はここに追加
+            });
+        });
+        
+        // 言語セクションの選択オプション
+        const langOptions = document.querySelectorAll('.language-option');
+        langOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                // 言語選択処理をここに追加
+                alert('言語が選択されました: ' + this.querySelector('.language-name').textContent);
+            });
+        });
+    </script>
+</body>
+</html>
+```
+
+このコードをindex.htmlファイルとして保存し、GitHubにアップロードしてください。現在のプレースホルダー画像（`/api/placeholder/...`）は、実際の製品画像に置き換える必要があります。
+
+また、必要に応じてサンプルセクションや施術事例セクションを追加することができます。このコードは基本的な構造を提供しているだけで、実際のウェブサイトはさらに拡張できます。​​​​​​​​​​​​​​​​
